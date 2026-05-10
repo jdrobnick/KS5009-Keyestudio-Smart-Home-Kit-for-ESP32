@@ -1,11 +1,13 @@
-#define fanPin1 19    // Fan control pin 1
-#define fanPin2 18    // Fan control pin 2
-#define btn1 16       // Button 1 pin
-#define btn2 27       // Button 2 pin
+#define fanPin1 19
+#define fanPin2 18
+#define btn1 16
+#define btn2 27
 
-int btn_count = 0;    // Counter for button 1 presses
-int btn_count2 = 0;   // Counter for button 2 presses
-int speed_val = 130;  // Initial fan speed (PWM value)
+int btn_count = 0;
+int btn_count2 = 0;
+int speed_val = 130;
+boolean btn1_prev = HIGH;
+boolean btn2_prev = HIGH;
 
 void setup() {
   Serial.begin(9600);
@@ -17,86 +19,41 @@ void setup() {
 
 void loop() {
   boolean btn1_val = digitalRead(btn1);
-  
-  // Button 1 (Power/Speed Control) handling
-  if(btn1_val == 0) // If button is pressed
-  {
-    delay(10);  // Debounce delay
-    if(btn1_val == 0) // Confirm button press
-    {
-      boolean btn_state = 1;
-      while(btn_state == 1) // Wait for button release
-      {
-        boolean btn_val = digitalRead(btn1);
-        if(btn_val == 1)  // If button released
-        {
-          btn_count++;    // Increment press counter
-          Serial.println(btn_count);
-          btn_state = 0;  // Exit loop
-        }
-      }
+  boolean btn2_val = digitalRead(btn2);
+  boolean power_state = btn_count % 2;
+
+  // Button 1: toggle fan on/off (detect release edge)
+  if (btn1_prev == LOW && btn1_val == HIGH) {
+    delay(10);
+    if (digitalRead(btn1) == HIGH) {
+      btn_count++;
+      Serial.println(btn_count);
     }
-    
-    boolean power_state = btn_count % 2; // Toggle power state (0 or 1)
-    
-    while(power_state == 1) // While fan is on
-    {
-      digitalWrite(fanPin1, LOW);  // Set direction
-      analogWrite(fanPin2, speed_val); // Set speed
-      
-      // Button 2 (Speed Adjustment) handling
-      boolean btn2_val = digitalRead(btn2);
-      if(btn2_val == 0) // If speed button pressed
-      {
-        delay(10); // Debounce delay
-        if(btn2_val == 0) // Confirm press
-        {
-          boolean btn_state2 = 1;
-          while(btn_state2 == 1) // Wait for release
-          {
-            boolean btn2_val = digitalRead(btn2);
-            if(btn2_val == 1) // If released
-            {
-              btn_count2++; // Increment speed level
-              if(btn_count2 > 3) // Cycle through 1-3
-              {
-                btn_count2 = 1;
-              }
-              
-              // Set speed based on count
-              switch(btn_count2)
-              {
-                case 1: 
-                  speed_val = 130; // Low speed
-                  Serial.println(speed_val);
-                  break;
-                case 2: 
-                  speed_val = 180; // Medium speed
-                  Serial.println(speed_val);
-                  break;
-                case 3: 
-                  speed_val = 230; // High speed
-                  Serial.println(speed_val);
-                  break;
-              }
-              btn_state2 = 0;
-            }
-          }
-        }
+  }
+  btn1_prev = btn1_val;
+
+  // Button 2: cycle speed low/med/high (only while fan is on)
+  if (power_state && btn2_prev == LOW && btn2_val == HIGH) {
+    delay(10);
+    if (digitalRead(btn2) == HIGH) {
+      btn_count2++;
+      if (btn_count2 > 3) btn_count2 = 1;
+      switch (btn_count2) {
+        case 1: speed_val = 130; break;
+        case 2: speed_val = 180; break;
+        case 3: speed_val = 230; break;
       }
-      
-      // Check for power off
-      btn1_val = digitalRead(btn1);
-      if(btn1_val == 0) // If power button pressed
-      {
-        delay(10); // Debounce delay
-        if(btn1_val == 0) // Confirm press
-        {
-          digitalWrite(fanPin1, LOW); // Stop fan
-          analogWrite(fanPin2, 0);
-          power_state = 0;  // Exit fan control loop
-        }
-      }
+      Serial.println(speed_val);
     }
+  }
+  btn2_prev = btn2_val;
+
+  // Apply fan state every loop
+  if (power_state) {
+    digitalWrite(fanPin1, LOW);
+    analogWrite(fanPin2, speed_val);
+  } else {
+    digitalWrite(fanPin1, LOW);
+    analogWrite(fanPin2, 0);
   }
 }
