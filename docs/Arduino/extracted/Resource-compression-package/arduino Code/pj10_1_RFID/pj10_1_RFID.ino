@@ -9,7 +9,6 @@
 LiquidCrystal_I2C mylcd(0x27,16,2);
 #include <ESP32Servo.h>
 Servo myservo;
-#include <Wire.h>
 #include "MFRC522_I2C.h"
 // IIC pins default to GPIO21 and GPIO22 of ESP32
 // 0x28 is the i2c address of SDA, if doesn't match，please check your address with i2c.

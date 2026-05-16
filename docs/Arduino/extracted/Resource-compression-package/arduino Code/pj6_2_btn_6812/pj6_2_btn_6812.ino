@@ -14,7 +14,7 @@ int btn_count = 0; // Counter for button presses
 
 void setup() 
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(btn1, INPUT);
   pinMode(btn2, INPUT);
   

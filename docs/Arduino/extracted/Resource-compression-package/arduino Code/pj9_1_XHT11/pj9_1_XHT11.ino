@@ -8,7 +8,7 @@ const int DHT11PIN = 17; // Temperature and humidity sensor pin
 dht11 DHT11; // Initialize dht11
 
 void setup() {
-  Serial.begin(9600);//Start the serial monitor and set the baud rate to 9600
+  Serial.begin(115200);//Start the serial monitor and set the baud rate to 9600
   mylcd.init();
   mylcd.backlight();
   mylcd.clear();

@@ -10,7 +10,7 @@ boolean btn1_prev = HIGH;
 boolean btn2_prev = HIGH;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(btn1, INPUT);
   pinMode(btn2, INPUT);
   pinMode(fanPin1, OUTPUT);

@@ -27,7 +27,7 @@ String request;
 unsigned long prevTask = 0;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   //Connect to wifi
   WiFi.begin(ssid, pwd);
   //Determine whether it is connected

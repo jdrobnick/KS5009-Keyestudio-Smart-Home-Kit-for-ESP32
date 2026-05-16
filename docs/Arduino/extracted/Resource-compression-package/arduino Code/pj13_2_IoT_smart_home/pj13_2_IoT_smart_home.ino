@@ -36,10 +36,8 @@ BuzzerESP32 buzzer(buzzer_pin);   // GPIO25
 #define gasPin 23
 #define pyroelectric 14
 
-// Servo channels
-int channel_PWM1 = 13;
-int channel_PWM2 = 10;
-int freq_PWM = 50; 
+// Servo PWM settings
+int freq_PWM = 50;
 int resolution_PWM = 10;
 const int PWM_Pin1 = 5;
 const int PWM_Pin2 = 13;
@@ -50,7 +48,7 @@ int Rainwater, gas, pir, t, h;  //Define variables
 unsigned long prevTask = 0;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   //Connect to wifi
   WiFi.begin(ssid, pwd);
   //Determine whether it is connected
@@ -94,9 +92,7 @@ void setup() {
   pinMode(pyroelectric, INPUT);
 
   ledcAttach(PWM_Pin1, freq_PWM, resolution_PWM);
-  ledcAttachChannel(PWM_Pin1, freq_PWM, resolution_PWM, channel_PWM1);
   ledcAttach(PWM_Pin2, freq_PWM, resolution_PWM);
-  ledcAttachChannel(PWM_Pin2, freq_PWM, resolution_PWM, channel_PWM2);
   ledcWrite(PWM_Pin1, 25);
   delay(500);
   ledcWrite(PWM_Pin2, 25);
@@ -181,11 +177,11 @@ void loop() {
  
       //fan
       if (request == "f") {
-        digitalWrite(fanPin2, LOW); //pwm = 0
-        analogWrite(fanPin1, 100); //LEDC channel 5 is bound to the specified left motor output PWM value as 100.
+        digitalWrite(fanPin1, LOW);
+        analogWrite(fanPin2, 100);
       } else if (request == "F") {
-        digitalWrite(fanPin2, LOW); //pwm = 0
-        analogWrite(fanPin1, 0); //LEDC channel 5 is bound to the specified left motor output PWM value as 0.
+        digitalWrite(fanPin1, LOW);
+        analogWrite(fanPin2, 0);
       }
 
       //SK6812RGB turns on and off its red light

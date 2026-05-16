@@ -6,7 +6,7 @@ boolean btn1_prev = HIGH;
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(btn1, INPUT);
   pinMode(led_y, OUTPUT);
 }

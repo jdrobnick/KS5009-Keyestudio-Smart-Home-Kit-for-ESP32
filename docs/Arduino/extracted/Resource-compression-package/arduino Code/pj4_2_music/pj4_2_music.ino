@@ -6,7 +6,7 @@ boolean music_flag = 0; // Flag to trigger music playback
 
 void setup() 
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(btn1, INPUT);
   // Available music options:
   // Music.tetris();

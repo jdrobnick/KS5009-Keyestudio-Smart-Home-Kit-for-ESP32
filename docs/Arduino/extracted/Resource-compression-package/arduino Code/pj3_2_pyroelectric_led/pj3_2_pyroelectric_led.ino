@@ -3,7 +3,7 @@
 
 void setup() 
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(pyroelectric, INPUT);
   pinMode(led_y, OUTPUT);  // Set pin as output mode
 }

@@ -6,7 +6,7 @@ Servo myservo;
 
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(waterPin, INPUT);
 
 	// Allow allocation of all timers

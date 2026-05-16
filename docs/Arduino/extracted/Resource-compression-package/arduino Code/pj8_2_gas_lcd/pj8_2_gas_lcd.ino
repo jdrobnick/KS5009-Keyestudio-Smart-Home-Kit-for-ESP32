@@ -12,7 +12,7 @@ boolean dangerDisplayed = 1;
 boolean safetyDisplayed = 1;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   
   // Initialize LCD
   mylcd.init();
