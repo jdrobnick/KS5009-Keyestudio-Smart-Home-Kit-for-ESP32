@@ -4,8 +4,9 @@
 #include <WiFiClient.h>
 
 // Network Configuration
-const char* ssid = "ChinaNet-2.4G-0DF0";
-const char* password = "ChinaNet@233";
+#include "config.h"
+const char* ssid = WIFI_SSID;
+const char* password = WIFI_PASSWORD;
 WiFiServer server(80);
 
 // Global Variables

@@ -11,8 +11,9 @@
 #define fanPin2 18 //IN- pin
 #define led_y 12  //Define the yellow led pin as 12
 
-const char* ssid = "ChinaNet-2.4G-0DF0";
-const char* pwd = "ChinaNet@233";
+#include "config.h"
+const char* ssid = WIFI_SSID;
+const char* pwd = WIFI_PASSWORD;
 
 #include <Wire.h>
 //Initialize the LCD address, columns and rows

@@ -13,8 +13,9 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 //Define the variable as the detected value
 String request;
-const char* ssid = "ChinaNet-2.4G-0DF0";
-const char* pwd = "ChinaNet@233";
+#include "config.h"
+const char* ssid = WIFI_SSID;
+const char* pwd = WIFI_PASSWORD;
 WiFiServer server(80);  //Initialize the WiFi service
 
 #include <LiquidCrystal_I2C.h>

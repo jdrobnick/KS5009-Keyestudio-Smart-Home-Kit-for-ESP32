@@ -19,3 +19,4 @@ Thumbs.db
 /_static/
 /_templates/
 /.vscode/
+config.h
